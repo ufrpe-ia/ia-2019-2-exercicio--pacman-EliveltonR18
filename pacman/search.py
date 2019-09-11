@@ -85,8 +85,26 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    #inicializacao
+    fringe = util.Stack()
+    visitedList = []
+
+    #coloque o ponto de partida para a fila
+    fringe.push((problem.getStartState(),[],0))
+    #estendendo o ponto
+    (state,toDirection,toCost) = fringe.pop()
+    #coloca o ponto visitado na lista de pontos visitados
+    visitedList.append(state)
+
+    while not problem.isGoalState(state): #enquanto nao encontramos o caminho objetivo
+        successors = problem.getSuccessors(state) #pega os pontos sucessoress
+        for son in successors:
+            if (not son[0] in visitedList) or (problem.isGoalState(son[0])): #caso o ponto sucessor não tenha sido visitado, coloca na pilha
+                fringe.push((son[0],toDirection + [son[1]],toCost + son[2]))
+                visitedList.append(son[0]) #coloca o ponto visitado na lista depontos visitados
+        (state,toDirection,toCost) = fringe.pop()
+
+    return toDirection
 
 
 def breadthFirstSearch(problem):
