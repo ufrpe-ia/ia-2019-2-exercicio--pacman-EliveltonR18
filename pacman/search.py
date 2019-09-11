@@ -110,9 +110,25 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """
     Search the shallowest nodes in the search tree first.
-    DICA: Utilizar util.PriorityQueue
-    *** YOUR CODE HERE ***
     """
+    start = problem.getStartState()
+    print(start)
+    visited = []
+    fringe = util.Queue()
+    fringe.push((start,[]))
+    while not fringe.isEmpty():
+        node,direction = fringe.pop()
+        if problem.isGoalState(node):
+            print(direction)
+            return direction
+        for p in problem.getSuccessors(node):
+            if p[0] not in visited:
+                visited.append(p[0])
+                fringe.push((p[0],direction+[p[1]]))
+    print(direction)
+    return direction
+
+
     util.raiseNotDefined()
 
     
